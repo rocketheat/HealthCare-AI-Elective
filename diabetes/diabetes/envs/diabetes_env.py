@@ -27,10 +27,11 @@ class DiabetesEnv(gym.Env):
         self.STEP_LIMIT = 365 # 30 days
         self.sleep = 0
 
-        self.w1 = 1.1
-        self.w2 = 2.5
-        self.w3 = [-125, -180, -90, -60, 0]
-        self.normalization_factor = 70
+        self.w1 = 0.1
+        self.w2 = 0.2
+        self.w3 = [-10, -15, -6, -4, 0]
+        self.w4 = 1/0.99
+        self.normalization_factor = 3.0
 
         self.meds = 0
         self.meds_list = []
@@ -99,8 +100,8 @@ class DiabetesEnv(gym.Env):
         return reward
 
     def calc_next_glucose(self):
-        glucose_det = self.w1*self.age + self.w2*self.bmi + ((self.w3[self.meds] * self.normalization_factor) / (self.age * self.bmi))
-        self.glucose = stats.norm(glucose_det, 5).rvs()
+        glucose_det = self.w1*self.age + self.w2*self.bmi + self.w3[self.meds] * self.normalization_factor +  self.w4*self.w3[self.meds]/(self.age * self.bmi)
+        self.glucose = stats.norm(self.glucose + 0.2*glucose_det, 5).rvs()
         return self.glucose
 
     def update_game_state(self):
