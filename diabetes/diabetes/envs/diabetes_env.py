@@ -106,6 +106,8 @@ class DiabetesEnv(gym.Env):
     def calc_next_glucose(self):
         glucose_det = self.w1*self.age + self.w2*self.bmi + self.w3[self.meds] * self.normalization_factor +  self.w4*self.w3[self.meds]/(self.age * self.bmi)
         self.glucose = stats.norm(self.glucose + 0.2*glucose_det, 5).rvs()
+        self.glucose = np.max(self.glucose, 40)
+        self.glucose = np.min(self.glucose, 500)
         return self.glucose
 
     def update_game_state(self):
