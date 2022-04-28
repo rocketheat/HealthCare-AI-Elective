@@ -29,7 +29,7 @@ class DiabetesEnv(gym.Env):
 
         self.w1 = 0.1
         self.w2 = 0.2
-        self.w3 = [-8, -13, -5, -3, 0.2]
+        self.w3 = [-7, -12, -4.5, -2.5, 0.4]
         self.w4 = 1/0.99
         self.normalization_factor = 3.0
 
@@ -93,8 +93,12 @@ class DiabetesEnv(gym.Env):
         if 140 > self.glucose > 80:
             self.score += 1
             reward = +1
-        elif self.glucose < 80:
+        elif self.glucose < 60:
+            reward = -4
+        elif self.glucose > 300:
             reward = -3
+        elif self.glucose > 450:
+            reward = -4
         else:
             reward = -1
         return reward
