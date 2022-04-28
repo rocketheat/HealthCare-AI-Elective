@@ -29,7 +29,7 @@ class DiabetesEnv(gym.Env):
 
         self.w1 = 0.1
         self.w2 = 0.2
-        self.w3 = [-10, -15, -6, -4, 0]
+        self.w3 = [-8, -13, -5, -3, 0.2]
         self.w4 = 1/0.99
         self.normalization_factor = 3.0
 
