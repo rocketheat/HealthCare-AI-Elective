@@ -24,7 +24,7 @@ class DiabetesEnv(gym.Env):
         """
         self.action_space = spaces.Discrete(5)
 
-        self.STEP_LIMIT = 30 # 30 days
+        self.STEP_LIMIT = 365 # 30 days
         self.sleep = 0
 
         self.w1 = 1.1
